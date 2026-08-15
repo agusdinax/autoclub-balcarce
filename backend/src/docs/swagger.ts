@@ -1,116 +1,163 @@
 import swaggerJSDoc from "swagger-jsdoc";
 
-export const swaggerSpec = swaggerJSDoc({
-  definition: {
-    openapi: "3.0.3",
+import {
+  authSchemas,
+} from "./schemas/auth.swagger";
 
-    info: {
-      title: "Auto Club Balcarce API",
-      version: "1.0.0",
-      description:
-        "REST API for Auto Club Balcarce website.",
-    },
+import {
+  categorySchemas,
+} from "./schemas/category.swagger";
 
-    servers: [
-      {
-        url: "http://localhost:3000/api/v1",
-        description: "Local development",
-      },
-    ],
+import {
+  circuitLayoutSchemas,
+} from "./schemas/circuit-layout.swagger";
 
-    tags: [
-      {
-        name: "Circuits",
+import {
+  circuitSchemas,
+} from "./schemas/circuit.swagger";
+
+import {
+  contactSchemas,
+} from "./schemas/contact.swagger";
+
+import {
+  eventSchemas,
+} from "./schemas/event.swagger";
+
+import {
+  gallerySchemas,
+} from "./schemas/gallery.swagger";
+
+import {
+  kartRentalSchemas,
+} from "./schemas/kart-rental.swagger";
+
+import {
+  newsSchemas,
+} from "./schemas/news.swagger";
+
+export const swaggerSpec =
+  swaggerJSDoc({
+    definition: {
+      openapi: "3.0.3",
+
+      info: {
+        title:
+          "Auto Club Balcarce API",
+
+        version: "1.0.0",
+
         description:
-          "Main circuits managed by Auto Club Balcarce",
+          "REST API for managing Auto Club Balcarce circuits, circuit layouts, categories, events and related content.",
+
+        contact: {
+          name:
+            "Auto Club Balcarce",
+        },
       },
-      {
-        name: "Circuit Layouts",
-        description:
-          "Different configurations of each circuit",
-      },
-      {
-        name: "Categories",
-        description:
-          "Competition categories associated with circuits",
-      },
-    ],
 
-    components: {
-      schemas: {
-        CreateCircuit: {
-          type: "object",
-          required: [
-            "name",
-            "slug",
-            "type",
-            "description",
-            "location",
-          ],
-          properties: {
-            name: {
-              type: "string",
-              example:
-                "Autódromo Juan Manuel Fangio",
-            },
+      servers: [
+        {
+          url:
+            "http://localhost:3000/api/v1",
 
-            slug: {
-              type: "string",
-              example:
-                "autodromo-juan-manuel-fangio",
-            },
+          description:
+            "Local development",
+        },
+      ],
 
-            type: {
-              type: "string",
-              enum: [
-                "AUTODROMO",
-                "KARTODROMO",
-              ],
-              example: "AUTODROMO",
-            },
+      tags: [
+        {
+          name: "Circuits",
+          description:
+            "Main circuits managed by Auto Club Balcarce",
+        },
 
-            description: {
-              type: "string",
-              example:
-                "Circuito automovilístico de Balcarce.",
-            },
+        {
+          name:
+            "Circuit Layouts",
 
-            location: {
-              type: "string",
-              example:
-                "Balcarce, Buenos Aires, Argentina",
-            },
+          description:
+            "Different configurations of each circuit",
+        },
 
-            mapUrl: {
-              type: "string",
-              nullable: true,
-              example: null,
-            },
+        {
+          name: "Categories",
 
-            imageUrl: {
-              type: "string",
-              nullable: true,
-              example: null,
-            },
+          description:
+            "Competition categories associated with circuits",
+        },
 
-            isActive: {
-              type: "boolean",
-              example: true,
-            },
+        {
+          name: "Events",
+
+          description:
+            "Races, test days and special events managed by Auto Club Balcarce",
+        },
+
+        {
+          name: "Kart Rentals",
+
+          description:
+            "Kart rental configuration and pricing",
+        },
+
+        {
+          name: "News",
+
+          description:
+            "News and announcements published by Auto Club Balcarce",
+        },
+
+        {
+          name: "Gallery",
+
+          description:
+            "Photo galleries related to Auto Club Balcarce circuits and events",
+        },
+
+        {
+          name: "Contact",
+
+          description:
+            "Public contact form",
+        },
+
+        {
+          name: "Auth",
+
+          description:
+            "Authentication and access management",
+        },
+      ],
+
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: "http",
+            scheme: "bearer",
+            bearerFormat: "JWT",
+
+            description:
+              "Enter the JWT access token obtained from POST /auth/login",
           },
         },
 
-        Circuit: {
-          type: "object",
-          allOf: [
-            {
-              $ref: "#/components/schemas/CreateCircuit",
-            },
-          ],
+        schemas: {
+          ...authSchemas,
+          ...categorySchemas,
+          ...circuitSchemas,
+          ...circuitLayoutSchemas,
+          ...contactSchemas,
+          ...eventSchemas,
+          ...gallerySchemas,
+          ...kartRentalSchemas,
+          ...newsSchemas,
         },
       },
     },
-  },
 
-  apis: ["./src/**/*.ts"],
-});
+    apis: [
+      "./src/**/*.ts",
+    ],
+  });
