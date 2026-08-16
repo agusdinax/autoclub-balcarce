@@ -1,0 +1,118 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.footer {
+  background: $color-bg-secondary;
+  border-top: 1px solid $color-border;
+
+  &__container {
+    @include container;
+  }
+
+  > .footer__container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: $space-8;
+
+    padding-block: $space-8;
+  }
+
+  &__brand {
+    max-width: 320px;
+
+    p {
+      margin-top: $space-4;
+
+      color: $color-text-secondary;
+      font-size: $font-size-sm;
+    }
+  }
+
+  &__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-3;
+
+    font-family: $font-display;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.08em;
+  }
+
+  &__logo-mark {
+    width: 34px;
+    height: 34px;
+
+    @include flex-center;
+
+    background: $color-accent;
+
+    border-radius: $radius-sm;
+
+    font-weight: $font-weight-black;
+  }
+
+  &__navigation,
+  &__social {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-3;
+
+    a {
+      color: $color-text-secondary;
+      font-size: $font-size-sm;
+
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $color-text-primary;
+      }
+    }
+  }
+
+  &__label {
+    margin-bottom: $space-2;
+
+    color: $color-text-primary;
+
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  &__bottom {
+    border-top: 1px solid $color-border;
+
+    .footer__container {
+      min-height: 64px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: $space-4;
+
+      color: $color-text-muted;
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+@include responsive($breakpoint-md) {
+  .footer {
+    > .footer__container {
+      grid-template-columns: 1fr;
+      gap: $space-6;
+    }
+
+    &__bottom {
+      .footer__container {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        padding-block: $space-4;
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+@use "../../../styles/variables" as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+
+  padding: $space-1 $space-3;
+
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  color: $color-text-secondary;
+
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: $radius-full;
+
+    background: currentColor;
+  }
+
+  &--default {
+    color: $color-text-secondary;
+  }
+
+  &--accent {
+    border-color: rgba(225, 6, 0, 0.3);
+    background: $color-accent-soft;
+    color: $color-accent-hover;
+  }
+
+  &--success {
+    border-color: rgba(54, 194, 117, 0.25);
+    color: $color-success;
+  }
+
+  &--warning {
+    border-color: rgba(245, 185, 66, 0.25);
+    color: $color-warning;
+  }
+
+  &--danger {
+    border-color: rgba(225, 6, 0, 0.3);
+    color: $color-danger;
+  }
+}

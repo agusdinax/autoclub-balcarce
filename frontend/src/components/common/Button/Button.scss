@@ -1,0 +1,113 @@
+@use "../../../styles/variables" as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+
+  border: 1px solid transparent;
+  border-radius: $radius-sm;
+
+  font-family: $font-primary;
+  font-weight: $font-weight-bold;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  cursor: pointer;
+
+  transition:
+    background $transition-fast,
+    color $transition-fast,
+    border-color $transition-fast,
+    transform $transition-fast,
+    box-shadow $transition-fast;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  &:not(:disabled):active {
+    transform: translateY(1px);
+  }
+
+  // --------------------------------
+  // Sizes
+  // --------------------------------
+
+  &--sm {
+    min-height: 34px;
+    padding: $space-2 $space-3;
+
+    font-size: $font-size-xs;
+  }
+
+  &--md {
+    min-height: 42px;
+    padding: $space-2 $space-5;
+
+    font-size: $font-size-sm;
+  }
+
+  &--lg {
+    min-height: 50px;
+    padding: $space-3 $space-6;
+
+    font-size: $font-size-md;
+  }
+
+  // --------------------------------
+  // Variants
+  // --------------------------------
+
+  &--primary {
+    background: $color-accent;
+    color: $color-text-primary;
+
+    &:hover:not(:disabled) {
+      background: $color-accent-hover;
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  &--secondary {
+    background: transparent;
+    border-color: $color-border-strong;
+    color: $color-text-primary;
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: $color-text-secondary;
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.05);
+      color: $color-text-primary;
+    }
+  }
+
+  &--danger {
+    background: $color-danger;
+    color: $color-text-primary;
+
+    &:hover:not(:disabled) {
+      background: $color-accent-hover;
+    }
+  }
+
+  // --------------------------------
+  // Utilities
+  // --------------------------------
+
+  &--full {
+    width: 100%;
+  }
+}

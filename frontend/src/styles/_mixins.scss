@@ -1,0 +1,43 @@
+@use "./variables" as *;
+
+@mixin container {
+  width: min(100% - ($container-padding * 2), $container-width);
+  margin-inline: auto;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $color-border;
+  backdrop-filter: blur(12px);
+}
+
+@mixin hover-lift {
+  transition: transform $transition-normal,
+    border-color $transition-normal,
+    box-shadow $transition-normal;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: $color-border-strong;
+    box-shadow: $shadow-md;
+  }
+}
+
+@mixin heading-display {
+  font-family: $font-display;
+  font-weight: $font-weight-black;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+@mixin responsive($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}

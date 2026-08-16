@@ -1,0 +1,53 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.section-title {
+  max-width: 700px;
+
+  &__eyebrow {
+    display: block;
+
+    margin-bottom: $space-3;
+
+    color: $color-accent;
+
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  &__heading {
+    @include heading-display;
+
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 0.95;
+  }
+
+  &__highlight {
+    display: block;
+
+    color: $color-accent;
+  }
+
+  &__description {
+    max-width: 560px;
+
+    margin-top: $space-5;
+
+    color: $color-text-secondary;
+
+    font-size: $font-size-lg;
+  }
+
+  &--center {
+    margin-inline: auto;
+
+    text-align: center;
+
+    .section-title__description {
+      margin-inline: auto;
+    }
+  }
+}

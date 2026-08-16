@@ -1,0 +1,58 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.card {
+  position: relative;
+
+  overflow: hidden;
+
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+
+  background: $color-bg-card;
+
+  transition:
+    transform $transition-normal,
+    border-color $transition-normal,
+    box-shadow $transition-normal,
+    background $transition-normal;
+
+  &__accent {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 40px;
+    height: 2px;
+
+    background: $color-accent;
+
+    transition: width $transition-normal;
+  }
+
+  &--elevated {
+    box-shadow: $shadow-md;
+    background: $color-bg-elevated;
+  }
+
+  &--outlined {
+    background: transparent;
+  }
+
+  &--hoverable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-4px);
+
+      border-color: $color-border-strong;
+
+      box-shadow: $shadow-md;
+
+      .card__accent {
+        width: 100%;
+      }
+    }
+  }
+}

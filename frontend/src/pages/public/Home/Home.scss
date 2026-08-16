@@ -1,0 +1,267 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.home {
+  background: $color-bg;
+}
+
+.hero {
+  position: relative;
+
+  min-height: calc(100vh - $header-height);
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  &__background {
+    position: absolute;
+    inset: 0;
+
+    background:
+      url("/hero-car.jpg")
+      center / cover no-repeat;
+
+    transform: scale(1.02);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(8, 9, 11, 0.95) 0%,
+        rgba(8, 9, 11, 0.75) 45%,
+        rgba(8, 9, 11, 0.25) 100%
+      );
+  }
+
+  &::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background-image:
+      linear-gradient(
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px
+      );
+
+    background-size: 60px 60px;
+
+    mask-image: linear-gradient(
+      to right,
+      black,
+      transparent
+    );
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+
+    @include container;
+
+    padding-block: $space-10;
+  }
+
+  &__eyebrow {
+    display: block;
+
+    margin-bottom: $space-5;
+
+    color: $color-accent;
+
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.12em;
+  }
+
+  &__title {
+    max-width: 800px;
+
+    margin-bottom: $space-5;
+
+    font-family: $font-display;
+    font-size: $font-size-hero;
+    font-weight: $font-weight-black;
+
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+
+    text-transform: uppercase;
+
+    span {
+      display: block;
+      color: $color-accent;
+    }
+  }
+
+  &__description {
+    max-width: 550px;
+
+    margin-bottom: $space-7;
+
+    color: $color-text-secondary;
+
+    font-size: $font-size-lg;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+  }
+
+  &__primary-button,
+  &__secondary-button {
+    padding: $space-3 $space-5;
+
+    border-radius: $radius-sm;
+
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    transition:
+      background $transition-fast,
+      color $transition-fast,
+      border-color $transition-fast;
+  }
+
+  &__primary-button {
+    background: $color-accent;
+
+    &:hover {
+      background: $color-accent-hover;
+    }
+  }
+
+  &__secondary-button {
+    border: 1px solid $color-border-strong;
+
+    color: $color-text-primary;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  &__telemetry {
+    position: absolute;
+
+    right: $space-7;
+    bottom: $space-7;
+
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+
+    text-align: right;
+
+    color: $color-text-muted;
+
+    font-size: $font-size-xs;
+    letter-spacing: 0.1em;
+
+    strong {
+      color: $color-text-primary;
+    }
+  }
+
+  &__line {
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    width: 45%;
+    height: 3px;
+
+    background: $color-accent;
+  }
+}
+
+.home__intro {
+  @include container;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-9;
+
+  padding-block: $space-10;
+
+  h2 {
+    @include heading-display;
+
+    margin-top: $space-3;
+
+    font-size: clamp(2.5rem, 5vw, 5rem);
+
+    line-height: 0.95;
+
+    span {
+      display: block;
+      color: $color-accent;
+    }
+  }
+
+  p {
+    max-width: 500px;
+
+    align-self: end;
+
+    color: $color-text-secondary;
+    font-size: $font-size-lg;
+  }
+}
+
+@include responsive($breakpoint-md) {
+  .hero {
+    min-height: calc(100vh - $header-height);
+
+    &__content {
+      padding-inline: $space-4;
+    }
+
+    &__title {
+      font-size: clamp(3rem, 16vw, 5rem);
+    }
+
+    &__description {
+      font-size: $font-size-md;
+    }
+
+    &__actions {
+      flex-direction: column;
+      align-items: stretch;
+
+      max-width: 280px;
+    }
+
+    &__telemetry {
+      right: $space-4;
+      bottom: $space-4;
+    }
+  }
+
+  .home__intro {
+    grid-template-columns: 1fr;
+    gap: $space-5;
+
+    padding-inline: $space-4;
+  }
+}

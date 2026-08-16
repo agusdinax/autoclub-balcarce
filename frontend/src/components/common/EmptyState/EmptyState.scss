@@ -1,0 +1,50 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.empty-state {
+  @include flex-center;
+
+  flex-direction: column;
+
+  min-height: 280px;
+
+  padding: $space-7;
+
+  text-align: center;
+
+  border: 1px dashed $color-border-strong;
+  border-radius: $radius-lg;
+
+  background: rgba(255, 255, 255, 0.02);
+
+  &__icon {
+    @include flex-center;
+
+    width: 54px;
+    height: 54px;
+
+    margin-bottom: $space-4;
+
+    border-radius: $radius-full;
+
+    background: $color-accent-soft;
+
+    color: $color-accent;
+
+    font-size: $font-size-xl;
+  }
+
+  h3 {
+    margin-bottom: $space-2;
+
+    font-family: $font-display;
+    font-size: $font-size-xl;
+  }
+
+  p {
+    max-width: 420px;
+
+    color: $color-text-secondary;
+    font-size: $font-size-sm;
+  }
+}
