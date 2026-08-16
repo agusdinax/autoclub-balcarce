@@ -1,8 +1,6 @@
 export type {
   Event,
-} from "./event";
-
-export {
   EventType,
   EventStatus,
+  EventReference,
 } from "./event";

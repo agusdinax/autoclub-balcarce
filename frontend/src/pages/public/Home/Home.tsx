@@ -1,18 +1,7 @@
 import { Link } from "react-router-dom";
+
 import "./Home.scss";
-import { EventCard } from "../../../components/events/EventCard/EventCard";
-import type { Event } from "../../../types";
-const mockEvent: Event = {
-  id: "1",
-  title: "Track Day 2026",
-  description:
-    "A full day dedicated to performance and automotive culture.",
-  date: "2026-08-24",
-  location: "Autódromo Balcarce",
-  image: "/event-track.jpg",
-  type: "Track Day",
-  status: "upcoming",
-};
+
 export function Home() {
   return (
     <div className="home">
@@ -36,16 +25,23 @@ export function Home() {
           </h1>
 
           <p className="hero__description">
-            Events, clubs, machines and people connected
-            by the same passion for automotive culture.
+            Events, clubs, machines and people
+            connected by the same passion for
+            automotive culture.
           </p>
 
           <div className="hero__actions">
-            <Link to="/events" className="hero__primary-button">
+            <Link
+              to="/events"
+              className="hero__primary-button"
+            >
               Explore Events
             </Link>
 
-            <Link to="/about" className="hero__secondary-button">
+            <Link
+              to="/about"
+              className="hero__secondary-button"
+            >
               Discover AutoClub
             </Link>
           </div>
@@ -81,17 +77,6 @@ export function Home() {
         </p>
 
       </section>
-
-      <section style={{ padding: "6rem 0" }}>
-  <div
-    style={{
-      width: "min(100% - 3rem, 1280px)",
-      margin: "0 auto",
-    }}
-  >
-    <EventCard event={mockEvent} />
-  </div>
-</section>
 
     </div>
   );

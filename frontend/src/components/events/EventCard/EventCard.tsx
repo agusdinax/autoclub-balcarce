@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 
-import type { Event } from "../../../types";
+import type {
+  Event,
+  EventStatus,
+} from "../../../types";
 
 import { Badge } from "../../common/Badge/Badge";
 
@@ -11,27 +14,59 @@ interface EventCardProps {
   event: Event;
 }
 
-const statusLabels = {
-  upcoming: "Upcoming",
-  completed: "Completed",
-  cancelled: "Cancelled",
+const statusConfig: Record<
+  EventStatus,
+  {
+    label: string;
+    variant:
+      | "default"
+      | "accent"
+      | "success"
+      | "warning"
+      | "danger";
+  }
+> = {
+  DRAFT: {
+    label: "Draft",
+    variant: "default",
+  },
+
+  PUBLISHED: {
+    label: "Upcoming",
+    variant: "accent",
+  },
+
+  CANCELLED: {
+    label: "Cancelled",
+    variant: "danger",
+  },
+
+  FINISHED: {
+    label: "Finished",
+    variant: "success",
+  },
 };
 
 export function EventCard({
   event,
 }: EventCardProps) {
+  const status = statusConfig[event.status];
+
   return (
     <article className="event-card">
 
       <Link
-        to={`/events/${event.id}`}
+        to={`/events/${event._id}`}
         className="event-card__image-link"
         aria-label={`View ${event.title}`}
       >
         <div className="event-card__image-wrapper">
 
           <img
-            src={event.image}
+            src={
+              event.imageUrl ??
+              "/placeholder-event.jpg"
+            }
             alt={event.title}
             className="event-card__image"
           />
@@ -39,21 +74,13 @@ export function EventCard({
           <div className="event-card__overlay" />
 
           <div className="event-card__status">
-            <Badge
-              variant={
-                event.status === "upcoming"
-                  ? "accent"
-                  : event.status === "completed"
-                    ? "success"
-                    : "danger"
-              }
-            >
-              {statusLabels[event.status]}
+            <Badge variant={status.variant}>
+              {status.label}
             </Badge>
           </div>
 
           <span className="event-card__type">
-            {event.type}
+            {formatEventType(event.type)}
           </span>
 
         </div>
@@ -87,7 +114,8 @@ export function EventCard({
             <FaLocationDot />
 
             <span>
-              {event.location}
+              {event.circuit?.name ??
+                "Circuit"}
             </span>
           </div>
 
@@ -96,7 +124,7 @@ export function EventCard({
       </div>
 
       <Link
-        to={`/events/${event.id}`}
+        to={`/events/${event._id}`}
         className="event-card__link"
       >
         <span>View Event</span>
@@ -121,5 +149,11 @@ function formatMonth(date: string) {
     month: "short",
   })
     .format(new Date(date))
+    .toUpperCase();
+}
+
+function formatEventType(type: string) {
+  return type
+    .replaceAll("_", " ")
     .toUpperCase();
 }

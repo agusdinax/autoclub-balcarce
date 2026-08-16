@@ -1,11 +1,14 @@
+import { useEvents } from "../../../hooks/useEvents";
+
 import { Container } from "../../../components/common/Container/Container";
 import { SectionTitle } from "../../../components/common/SectionTitle/SectionTitle";
+import { Loading } from "../../../components/common/Loading/Loading";
+import { ErrorState } from "../../../components/common/ErrorState/ErrorState";
+import { EmptyState } from "../../../components/common/EmptyState/EmptyState";
+
 import { EventCard } from "../../../components/events/EventCard/EventCard";
 
-import type { Event } from "../../../types";
-
 import "./Events.scss";
-
 
 export function Events() {
   const {
@@ -18,19 +21,47 @@ export function Events() {
   return (
     <div className="events-page">
 
-      {/* Hero */}
+      <section className="events-page__hero">
+        <Container>
+          <SectionTitle
+            eyebrow="03 / EVENTS"
+            title="Find your"
+            highlight="next event."
+            description="Discover automotive events, track days, meetings and experiences."
+          />
+        </Container>
+      </section>
 
-      <section>
+      <section className="events-page__list">
         <Container>
 
-          {/* Loading */}
+          <div className="events-page__header">
+            <div>
+              <span className="events-page__label">
+                Upcoming
+              </span>
+
+              <h2>
+                Next on track
+              </h2>
+            </div>
+
+            {!loading && !error && (
+              <span className="events-page__counter">
+                {events.length
+                  .toString()
+                  .padStart(2, "0")}{" "}
+                EVENTS
+              </span>
+            )}
+          </div>
+
           {loading && (
             <Loading
               message="Loading events..."
             />
           )}
 
-          {/* Error */}
           {!loading && error && (
             <ErrorState
               title="Events unavailable"
@@ -39,7 +70,6 @@ export function Events() {
             />
           )}
 
-          {/* Empty */}
           {!loading &&
             !error &&
             events.length === 0 && (
@@ -49,7 +79,6 @@ export function Events() {
               />
             )}
 
-          {/* Data */}
           {!loading &&
             !error &&
             events.length > 0 && (
