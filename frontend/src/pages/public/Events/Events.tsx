@@ -6,84 +6,62 @@ import type { Event } from "../../../types";
 
 import "./Events.scss";
 
-const mockEvents: Event[] = [
-  {
-    id: "1",
-    title: "Track Day 2026",
-    description:
-      "A full day dedicated to performance and automotive culture.",
-    date: "2026-08-24",
-    location: "Autódromo Balcarce",
-    image: "/event-track.jpg",
-    type: "Track Day",
-    status: "upcoming",
-  },
-  {
-    id: "2",
-    title: "Classic Cars Meeting",
-    description:
-      "A meeting for classic and historic automotive enthusiasts.",
-    date: "2026-09-12",
-    location: "Tandil",
-    image: "/event-classic.jpg",
-    type: "Meeting",
-    status: "upcoming",
-  },
-  {
-    id: "3",
-    title: "Night Racing",
-    description:
-      "An evening dedicated to performance cars and racing culture.",
-    date: "2026-09-26",
-    location: "Buenos Aires",
-    image: "/event-night.jpg",
-    type: "Racing",
-    status: "upcoming",
-  },
-];
 
 export function Events() {
+  const {
+    events,
+    loading,
+    error,
+    refetch,
+  } = useEvents();
+
   return (
     <div className="events-page">
 
-      <section className="events-page__hero">
-        <Container>
-          <SectionTitle
-            eyebrow="03 / EVENTS"
-            title="Find your"
-            highlight="next event."
-            description="Discover automotive events, track days, meetings and experiences."
-          />
-        </Container>
-      </section>
+      {/* Hero */}
 
-      <section className="events-page__list">
+      <section>
         <Container>
 
-          <div className="events-page__header">
-            <div>
-              <span className="events-page__label">
-                Upcoming
-              </span>
+          {/* Loading */}
+          {loading && (
+            <Loading
+              message="Loading events..."
+            />
+          )}
 
-              <h2>
-                Next on track
-              </h2>
-            </div>
+          {/* Error */}
+          {!loading && error && (
+            <ErrorState
+              title="Events unavailable"
+              description={error}
+              onRetry={refetch}
+            />
+          )}
 
-            <span className="events-page__counter">
-              {mockEvents.length.toString().padStart(2, "0")} EVENTS
-            </span>
-          </div>
-
-          <div className="events-page__grid">
-            {mockEvents.map((event) => (
-              <EventCard
-                key={event.id}
-                event={event}
+          {/* Empty */}
+          {!loading &&
+            !error &&
+            events.length === 0 && (
+              <EmptyState
+                title="No events found"
+                description="There are currently no events available."
               />
-            ))}
-          </div>
+            )}
+
+          {/* Data */}
+          {!loading &&
+            !error &&
+            events.length > 0 && (
+              <div className="events-page__grid">
+                {events.map((event) => (
+                  <EventCard
+                    key={event._id}
+                    event={event}
+                  />
+                ))}
+              </div>
+            )}
 
         </Container>
       </section>

@@ -1,15 +1,36 @@
-export type EventStatus =
-  | "upcoming"
-  | "completed"
-  | "cancelled";
+export enum EventType {
+  RACE = "RACE",
+  TEST_DAY = "TEST_DAY",
+  SPECIAL_EVENT = "SPECIAL_EVENT",
+}
+
+export enum EventStatus {
+  DRAFT = "DRAFT",
+  PUBLISHED = "PUBLISHED",
+  CANCELLED = "CANCELLED",
+  FINISHED = "FINISHED",
+}
+
+export interface EventReference {
+  _id: string;
+  name?: string;
+  title?: string;
+  slug?: string;
+}
 
 export interface Event {
-  id: string;
+  _id: string;
   title: string;
-  description?: string;
-  date: string;
-  location: string;
-  image: string;
-  type: string;
+  slug: string;
+  type: EventType;
   status: EventStatus;
+  date: string;
+  description: string;
+  circuit: EventReference;
+  layout: EventReference;
+  categories: EventReference[];
+  imageUrl: string | null;
+  registrationUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
 }
