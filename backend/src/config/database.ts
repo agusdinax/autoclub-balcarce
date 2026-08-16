@@ -1,15 +1,32 @@
 import mongoose from "mongoose";
 import { env } from "./env";
 
-export const connectDatabase = async (): Promise<void> => {
-  try {
-    await mongoose.connect(env.MONGODB_URI);
+export const connectDatabase =
+  async (): Promise<void> => {
+    try {
+      const uri =
+        env.NODE_ENV === "test"
+          ? env.MONGODB_TEST_URI
+          : env.MONGODB_URI;
 
-    console.log("✅ MongoDB connected");
-  } catch (error) {
-    console.error("❌ MongoDB connection failed");
-    console.error(error);
+      if (!uri) {
+        throw new Error(
+          "MONGODB_TEST_URI is required when NODE_ENV=test",
+        );
+      }
 
-    process.exit(1);
-  }
-};
+      await mongoose.connect(uri);
+
+      console.log(
+        "✅ MongoDB connected",
+      );
+    } catch (error) {
+      console.error(
+        "❌ MongoDB connection failed",
+      );
+
+      console.error(error);
+
+      throw error;
+    }
+  };

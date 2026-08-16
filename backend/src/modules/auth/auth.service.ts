@@ -1,53 +1,44 @@
-import bcrypt from "bcrypt";
+import { UnauthorizedError } from "../../errors/unauthorized-error";
 
 import {
-  UnauthorizedError,
-} from "../../errors/unauthorized-error";
-
-import {
-  UserModel,
-} from "../users/user.model";
-
-import {
-  LoginInput,
-} from "./auth.schema";
+  comparePassword,
+} from "../../utils/password";
 
 import {
   generateAccessToken,
 } from "../../utils/jwt";
 
+import {
+  getUserByEmail,
+} from "../users/user.service";
+
+interface LoginInput {
+  email: string;
+  password: string;
+}
+
 export const login = async (
   data: LoginInput,
 ) => {
   const user =
-    await UserModel.findOne({
-      email: data.email
-        .toLowerCase(),
-    });
+    await getUserByEmail(data.email);
 
-  if (!user) {
+  if (!user || !user.isActive) {
     throw new UnauthorizedError(
-      "Invalid email or password",
+      "Invalid credentials",
       "INVALID_CREDENTIALS",
     );
   }
 
-  if (!user.isActive) {
-    throw new UnauthorizedError(
-      "User account is inactive",
-      "USER_INACTIVE",
-    );
-  }
-
   const passwordMatches =
-    await bcrypt.compare(
+    await comparePassword(
       data.password,
       user.passwordHash,
     );
 
   if (!passwordMatches) {
     throw new UnauthorizedError(
-      "Invalid email or password",
+      "Invalid credentials",
       "INVALID_CREDENTIALS",
     );
   }
@@ -60,7 +51,6 @@ export const login = async (
 
   return {
     accessToken,
-
     user: {
       id: user._id,
       email: user.email,

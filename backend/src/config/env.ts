@@ -13,21 +13,29 @@ const envSchema = z.object({
     .int()
     .positive(),
 
-  MONGODB_URI:
-    z.string().min(1),
+  MONGODB_URI: z.string().min(1),
 
-  JWT_SECRET:
-    z.string().min(32),
+  MONGODB_TEST_URI: z.string().min(1) .optional(),
 
-  JWT_EXPIRES_IN:
-    z.string().default("1d"),
+  JWT_SECRET: z.string().min(32),
+
+  JWT_EXPIRES_IN: z
+    .string()
+    .default("1d"),
 });
 
-const parsedEnv = envSchema.safeParse(process.env);
+const parsedEnv =
+  envSchema.safeParse(process.env);
 
 if (!parsedEnv.success) {
-  console.error("❌ Invalid environment variables:");
-  console.error(parsedEnv.error.flatten().fieldErrors);
+  console.error(
+    "❌ Invalid environment variables:",
+  );
+
+  console.error(
+    parsedEnv.error.flatten()
+      .fieldErrors,
+  );
 
   process.exit(1);
 }
